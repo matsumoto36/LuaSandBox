@@ -4,26 +4,30 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
-using NLua;
+using MoonSharp.Interpreter;
 
 namespace LuaSandBox.Commands {
+
+	/// <summary>
+	/// luaスクリプトを実行するコマンド
+	/// </summary>
 	public class CommandExecLua : ICommand {
-		public void Execute(string[] inputCommands) {
+		public CommandResult Execute(string[] inputCommands) {
 
 			if(inputCommands.Length <= 1) {
 				Console.WriteLine("exec [path]");
-				return;
+				return CommandResult.Canceled;
 			}
 
 			if(!File.Exists(inputCommands[1])) {
 				Console.WriteLine("file not exits.");
-				return;
+				return CommandResult.Canceled;
 			}
 
-			var lua = new Lua();
+			var lua = new Script();
 			lua.DoFile(inputCommands[1]);
-			lua.Close();
 
+			return CommandResult.Executed;
 		}
 
 		public string GetCommandString() => "exec";

@@ -8,19 +8,24 @@ namespace LuaSandBox {
 	class Program {
 		static void Main(string[] args) {
 
-			while(true) {
+			//コマンドの結果を格納
+			var result = CommandResult.Executed;
 
+			while(result != CommandResult.RequestExit) {
+
+				//コマンドを入力
 				var input = Console.ReadLine().ToCommandList();
 
 				if(input.Length <= 0) continue;
 
-				if(input[0] == CommandList.GetExitCode()) break;
-
+				//リストにあるコマンドに一致するか調べる
 				foreach(var item in CommandList.Commands) {
-					if(input[0] == item.GetCommandString())
-						item.Execute(input);
-				}
+					if(input[0] != item.GetCommandString()) continue;
 
+					//一致したらコマンドを実行
+					result = item.Execute(input);
+					if(result == CommandResult.RequestExit) break;
+				}
 			}
 
 		}

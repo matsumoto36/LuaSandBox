@@ -6,15 +6,20 @@ using System.Threading.Tasks;
 using LuaSandBox.Commands;
 
 namespace LuaSandBox {
-	public class CommandList {
+
+	/// <summary>
+	/// コマンドのリストを保管しておくクラス
+	/// </summary>
+	public static class CommandList {
 
 		public static ICommand[] Commands {
 			get; private set;
 		} = new ICommand[] {
+			new CommandExit(),
 			new CommandVersion(),
-			new CommandExecLua()
+			new CommandExecLua(),
+			new CommandInteractiveLua(),
+			new CommandHelp(),
 		};
-
-		public static string GetExitCode() => "exit";
 	}
 }

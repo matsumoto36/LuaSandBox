@@ -7,15 +7,14 @@ using System.Threading.Tasks;
 namespace LuaSandBox.Commands {
 
 	/// <summary>
-	/// バージョンを確認するコマンド
+	/// 終了するコマンド
 	/// </summary>
-	public class CommandVersion : ICommand {
+	public class CommandExit : ICommand {
 
 		public CommandResult Execute(string[] inputCommands) {
-			Console.WriteLine("version is 1.0.0");
-			return CommandResult.Executed;
+			return CommandResult.RequestExit;
 		}
 
-		public string GetCommandString() => "version";
+		public string GetCommandString() => "exit";
 	}
 }
